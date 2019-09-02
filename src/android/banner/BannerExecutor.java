@@ -217,9 +217,18 @@ public class BannerExecutor extends AbstractExecutor {
                             parentView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 0.0F));
                             getWebView().setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1.0F));
                             parentView.addView(getWebView());
-                            rootView.addView(parentView);
-                        }
+                            try {
+                                parentView.getParent().removeView(parentView);
+                            } catch (Throwable e) {
+                                System.out.println("ERROR IN REMOVING VIEW");
+                            }
 
+                            try {
+                                rootView.addView(parentView);
+                            } catch (Throwable e) {
+                                System.out.println("ERROR IN ADDING VIEW");
+                            }
+                        }
 
                         if (plugin.config.bannerAtTop) {
                             parentView.addView(adView, 0);
